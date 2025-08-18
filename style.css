@@ -1,146 +1,317 @@
-/* style.css */
+/* =========================================================
+   VINTAGE DARK THEME CSS
+   Author: you & your friendly AI
+   Notes:
+   - Rasa vintage: serif klasik, warna tembaga, garis tipis, tekstur halus
+   - Gunakan class .card, .btn, .nav, .container, dst.
+   - Tambahkan [data-theme="dark"] di <html> untuk konsistensi tema
+   ========================================================= */
 
-/* Reset dasar */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+/* --- (Opsional) Font klasik dari Google Fonts --- */
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Spectral:ital,wght@0,400;0,600;1,400;1,600&display=swap");
+
+/* --- Variabel tema --- */
+:root {
+  /* Palet warna vintage gelap */
+  --bg: #111214;            /* charcoal nyaris hitam */
+  --bg-soft: #17191b;       /* sedikit lebih terang untuk blok */
+  --ink: #e8e1d5;           /* warna tinta kertas tua */
+  --ink-muted: #c9c2b6;     /* teks sekunder */
+  --copper: #c37b4a;        /* aksen tembaga */
+  --copper-deep: #9f5f33;   /* hover/tekan */
+  --gold: #d3b77a;          /* highlight tipis */
+  --line: #2a2b2d;          /* garis tipis */
+  --shadow: rgba(0,0,0,.6);
+  --success: #6a9f6b;
+  --danger: #b46a6a;
+
+  /* Tipografi & layout */
+  --font-serif: "EB Garamond","Spectral", Garamond, Georgia, "Times New Roman", serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --ring: 1px solid var(--line);
 }
 
+/* --- Reset lembut & aksesibilitas --- */
+*, *::before, *::after { box-sizing: border-box; }
+html { color-scheme: dark; }
+html, body { height: 100%; }
 body {
-  background: #fafafa;
-  color: #222;
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-serif);
   line-height: 1.6;
-  transition: background 0.3s, color 0.3s;
+  letter-spacing: .01em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  /* Tekstur halus (grain) agar terasa analog */
+  background-image:
+    radial-gradient(1200px 800px at 50% 0%, rgba(255,255,255,.03), transparent 60%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.015), rgba(255,255,255,.015) 1px, transparent 1px, transparent 2px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.01), rgba(255,255,255,.01) 1px, transparent 1px, transparent 2px);
+  background-attachment: fixed;
 }
 
-body.dark {
-  background: #121212;
-  color: #eaeaea;
-}
+/* --- Seleksi teks bernuansa emas --- */
+::selection { background: rgba(211,183,122,.25); color: var(--ink); }
 
-/* Header & Navbar */
-header {
-  background: #4CAF50;
-  color: white;
-  padding: 20px;
-  text-align: center;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+/* --- Container & grid util --- */
+.container {
+  width: min(1100px, 92vw);
+  margin-inline: auto;
+  padding: 24px;
 }
-
-header h1 {
-  font-size: 2rem;
-  margin-bottom: 10px;
-}
-
-nav {
-  display: flex;
-  justify-content: center;
+.grid {
+  display: grid;
   gap: 20px;
-  flex-wrap: wrap;
+}
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 900px){
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
 }
 
-nav a {
-  color: white;
+/* --- Heading bergaya letterpress --- */
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: .02em;
+  margin: 0 0 .6em;
+  text-shadow: 0 1px 0 rgba(0,0,0,.35);
+}
+h1 { font-size: clamp(2rem, 3vw + 1rem, 3rem); }
+h2 { font-size: clamp(1.6rem, 2.2vw + .8rem, 2.2rem); }
+h3 { font-size: clamp(1.3rem, 1.5vw + .6rem, 1.6rem); }
+
+/* Garis dekoratif vintage di bawah heading */
+.heading-underline {
+  position: relative;
+  padding-bottom: .4rem;
+}
+.heading-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 160px;
+  max-width: 60%;
+  height: 2px;
+  background:
+    linear-gradient(90deg, var(--copper), rgba(195,123,74,.2));
+  box-shadow: 0 0 0 1px rgba(195,123,74,.15);
+  border-radius: 2px;
+}
+
+/* --- Paragraf & teks --- */
+p { margin: 0 0 1.1em; font-size: 1.04rem; }
+.lead { font-size: 1.15rem; color: var(--ink); opacity: .95; }
+.muted { color: var(--ink-muted); }
+
+/* --- Link tembaga --- */
+a {
+  color: var(--copper);
   text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s;
+  border-bottom: 1px dotted rgba(195,123,74,.5);
+  transition: border-color .25s ease, color .25s ease;
 }
+a:hover { color: var(--gold); border-bottom-color: var(--gold); }
 
-nav a:hover {
-  color: #ffe082;
-}
-
-#darkToggle {
-  background: #333;
-  color: #fff;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s, color 0.3s;
-}
-
-body.dark #darkToggle {
-  background: #eaeaea;
-  color: #222;
-}
-
-/* Artikel */
-main {
-  max-width: 900px;
-  margin: 30px auto;
-  padding: 0 20px;
-}
-
-article {
-  background: white;
+/* --- Kartu vintage --- */
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.02)) , var(--bg-soft);
+  border: var(--ring);
+  border-radius: var(--radius);
   padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s, color 0.3s;
+  box-shadow:
+    0 20px 40px -20px var(--shadow),
+    inset 0 1px 0 rgba(255,255,255,.04),
+    inset 0 -1px 0 rgba(0,0,0,.2);
+  position: relative;
+  overflow: clip;
+}
+.card::after {
+  /* Vignette lembut */
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background: radial-gradient(120% 70% at 50% -20%, transparent 30%, rgba(0,0,0,.35) 80%);
+  mix-blend-mode: multiply;
+}
+.card + .card { margin-top: 14px; }
+
+/* --- Nav klasik --- */
+.nav {
+  display: flex; gap: 18px; align-items: center;
+  padding: 14px 0; border-bottom: 1px solid var(--line);
+}
+.nav a {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-size: .82rem;
+  padding-bottom: 6px;
+  border-bottom: 2px solid transparent;
+}
+.nav a:hover { border-bottom-color: var(--copper); }
+
+/* --- Tombol --- */
+.btn {
+  -webkit-tap-highlight-color: transparent;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: .5rem;
+  padding: .7rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.04));
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-size: .8rem;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+  box-shadow: 0 6px 16px -10px var(--shadow);
+}
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px -14px var(--shadow);
+  border-color: rgba(195,123,74,.5);
+}
+.btn:active { transform: translateY(0); }
+
+.btn-primary {
+  background: linear-gradient(180deg, rgba(195,123,74,.22), rgba(195,123,74,.08));
+  border-color: rgba(195,123,74,.6);
+  color: var(--ink);
+}
+.btn-primary:hover { background: linear-gradient(180deg, rgba(195,123,74,.28), rgba(195,123,74,.12)); }
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--ink-muted);
+}
+.btn-ghost:hover { color: var(--ink); border-color: rgba(255,255,255,.15); }
+
+/* --- Badge / tag --- */
+.badge {
+  display: inline-block;
+  padding: .25rem .5rem;
+  border: 1px solid rgba(211,183,122,.4);
+  border-radius: 999px;
+  font-size: .72rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(211,183,122,.08);
 }
 
-body.dark article {
-  background: #1e1e1e;
-  color: #eaeaea;
-  box-shadow: 0 2px 6px rgba(255,255,255,0.05);
+/* --- Formulir vintage --- */
+label { display: block; font-family: var(--font-sans); font-size: .85rem; color: var(--ink-muted); margin-bottom: .35rem; }
+input, textarea, select {
+  width: 100%;
+  background: #141517;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: .75rem .9rem;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+input::placeholder, textarea::placeholder { color: #90897d; }
+input:focus, textarea:focus, select:focus {
+  border-color: rgba(195,123,74,.6);
+  box-shadow: 0 0 0 3px rgba(195,123,74,.18);
+  background: #15171a;
+}
+fieldset {
+  border: 1px dashed rgba(211,183,122,.35);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+legend {
+  padding: 0 .5rem;
+  color: var(--gold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-size: .8rem;
 }
 
-article h2 {
-  margin-bottom: 10px;
-  color: #4CAF50;
+/* --- Tables --- */
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th, td { padding: .7rem; border-bottom: 1px solid var(--line); }
+th { text-align: left; color: var(--gold); font-weight: 600; }
+tr:hover td { background: rgba(255,255,255,.02); }
+
+/* --- Footer --- */
+.footer {
+  margin-top: 40px;
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+  color: var(--ink-muted);
+  font-family: var(--font-sans);
 }
 
-body.dark article h2 {
-  color: #81c784;
+/* --- Animasi halus --- */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in { animation: fade-in .6s ease forwards; }
+
+.underline-hover {
+  position: relative;
+}
+.underline-hover::after {
+  content: "";
+  position: absolute; left: 0; bottom: -2px;
+  width: 0%; height: 2px;
+  background: linear-gradient(90deg, var(--copper), transparent);
+  transition: width .25s ease;
+}
+.underline-hover:hover::after { width: 100%; }
+
+/* --- Kartu “polaroid” untuk galeri --- */
+.polaroid {
+  background: #0f1012;
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 6px;
+  padding: 10px 10px 18px;
+  box-shadow: 0 12px 24px -12px var(--shadow), inset 0 1px 0 rgba(255,255,255,.03);
+  transform: rotate(-.6deg);
+}
+.polaroid img { display: block; width: 100%; border-radius: 4px; filter: contrast(1.02) saturate(.9); }
+.polaroid .cap { margin-top: 8px; text-align: center; font-family: var(--font-serif); color: var(--ink-muted); font-size: .9rem; }
+
+/* --- Alert --- */
+.alert {
+  border-left: 3px solid var(--gold);
+  background: rgba(211,183,122,.06);
+  padding: .9rem 1rem;
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+}
+.alert.success { border-left-color: var(--success); background: rgba(106,159,107,.08); }
+.alert.danger  { border-left-color: var(--danger);  background: rgba(180,106,106,.08); }
+
+/* --- Utilitas kecil --- */
+.v-space { margin-top: 24px; }
+.center { display: grid; place-items: center; }
+.shadow-soft { box-shadow: 0 18px 36px -22px var(--shadow); }
+.round { border-radius: var(--radius); }
+.border { border: 1px solid var(--line); }
+
+/* --- Mode cetak (rapikan kontras) --- */
+@media print {
+  body { background: #111 !important; color: #eee; }
+  a { color: #ddd; border-bottom: 1px solid #555; }
+  .btn, .nav { display: none !important; }
 }
 
-/* Hover Animasi */
-article:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-}
-
-body.dark article:hover {
-  box-shadow: 0 8px 20px rgba(255,255,255,0.1);
-}
-
-/* Footer */
-footer {
-  text-align: center;
-  padding: 15px;
-  background: #4CAF50;
-  color: white;
-  margin-top: 30px;
-}
-
-/* Animasi teks perkenalan */
-header h1 {
-  opacity: 0;
-  transform: translateY(-20px);
-  animation: fadeSlideIn 1.2s forwards;
-}
-
-@keyframes fadeSlideIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsif */
-@media (max-width: 600px) {
-  nav {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  header h1 {
-    font-size: 1.5rem;
-  }
-}
+/* --- Toggle tema (opsional): gunakan .theme-copper / .theme-gold pada <body> --- */
+.theme-copper { --copper: #be7a51; --copper-deep:#8f5d3e; --gold:#d6b978; }
+.theme-gold   { --copper: #b98b3a; --copper-deep:#8c6a2b; --gold:#e1c780; }
