@@ -1,4 +1,3 @@
-**script.js**
 ```javascript
 // Toggle tema
 const toggleTheme = document.getElementById('toggleTheme');
