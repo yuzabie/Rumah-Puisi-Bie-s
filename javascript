@@ -1,4 +1,3 @@
-```javascript
 // Toggle tema
 const toggleTheme = document.getElementById('toggleTheme');
 const root = document.documentElement;
