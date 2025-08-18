@@ -3,16 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rumah Puisi Bie's</title>
+  <title>Rumah Puisi</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Tambahan styling untuk dark mode dan animasi */
+    body {
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark {
+      background: #1e1e1e;
+      color: #f1f1f1;
+    }
+    header h1 {
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeSlideIn 1.2s forwards;
+    }
+    @keyframes fadeSlideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    #darkToggle {
+      margin-left: 15px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #333;
+      color: #fff;
+      transition: background 0.3s;
+    }
+    body.dark #darkToggle {
+      background: #f1f1f1;
+      color: #222;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>Selamat Membaca dengan rasa tanpa memahami dengan makna</h1>
+    <h1>Selamat Datang untuk membaca dengan rasa tanpa memaknai</h1>
     <nav>
       <a href="#">Home</a>
       <a href="#">Tentang</a>
       <a href="#">Kontak</a>
+      <button id="darkToggle">🌙 Mode Gelap</button>
     </nav>
   </header>
 
@@ -31,5 +67,16 @@
   <footer>
     <p>© 2025 Blog Saya | Dibuat dengan HTML & CSS</p>
   </footer>
+
+  <script>
+    // Dark mode toggle
+    const toggle = document.getElementById('darkToggle');
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      toggle.textContent = document.body.classList.contains('dark') 
+        ? '☀️ Mode Terang' 
+        : '🌙 Mode Gelap';
+    });
+  </script>
 </body>
 </html>
